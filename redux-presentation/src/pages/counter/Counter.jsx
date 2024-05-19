@@ -8,17 +8,14 @@ import {
   incrementAsync,
   incrementByAmount,
   incrementIfOdd,
-  selectCount,
-  selectStatus,
-} from "./counterSlice";
+  selectValue,
+} from "../../redux/reducers/counter/counterSlice";
 
 export const Counter = () => {
   const dispatch = useDispatch();
-  const count = useSelector(selectCount);
-  const status = useSelector(selectStatus);
-  const [incrementAmount, setIncrementAmount] = useState("2");
+  const value = useSelector(selectValue);
 
-  const incrementValue = Number(incrementAmount) || 0;
+  const [incrementAmount, setIncrementAmount] = useState("2");
 
   return (
     <div>
@@ -31,7 +28,7 @@ export const Counter = () => {
           -
         </button>
         <span aria-label="Count" className={styles.value}>
-          {count}
+          {value}
         </span>
         <button
           className={styles.button}
@@ -53,21 +50,20 @@ export const Counter = () => {
         />
         <button
           className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
+          onClick={() => dispatch(incrementByAmount(incrementAmount))}
         >
           Add Amount
         </button>
         <button
           className={styles.asyncButton}
-          disabled={status !== "idle"}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
+          onClick={() => dispatch(incrementAsync(incrementAmount))}
         >
           Add Async
         </button>
         <button
           className={styles.button}
           onClick={() => {
-            dispatch(incrementIfOdd(incrementValue));
+            dispatch(incrementIfOdd(incrementAmount));
           }}
         >
           Add If Odd
